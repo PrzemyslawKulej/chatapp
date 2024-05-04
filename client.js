@@ -13,6 +13,7 @@ const socket = net.createConnection(
 
     const message = await rl.question("Enter a message>");
     console.log("message")
+    console.log("message")
 
     socket.write(message);
 });
