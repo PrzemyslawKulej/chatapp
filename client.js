@@ -12,11 +12,14 @@ const socket = net.createConnection(
     console.log("Connected to the server!");
 
     const message = await rl.question("Enter a message>");
-    console.log("message")
-    console.log("message")
+    
 
     socket.write(message);
 });
+
+socket.on("data", (data) => {
+    console.log(data.toString("utf-8"));
+})
 
 socket.on("end", () => {
      console.log("Closed!");
