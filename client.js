@@ -6,19 +6,32 @@ const rl = readline.createInterface({
     output: process.stdout
 })
 
+const clearLine = () => {
+    return new Promise((resolve, reject) => {
+        process.stdout.clearLine(dir, () => {
+        resolve();
+        })
+        
+    })
+    }
+
 const socket = net.createConnection(
     {host: "127.0.0.1", port: 3008},
  async () => {
     console.log("Connected to the server!");
-
-    const message = await rl.question("Enter a message>");
     
+    const ask = async () => {
+        const message = await rl.question("Enter a message>");
+        socket.write(message);
+        
+    };
 
-    socket.write(message);
+    ask();    
+
 });
 
 socket.on("data", (data) => {
-    console.log(data.toString("utf-8"));
+    console.log(data.toString("utf-8"));   
 })
 
 socket.on("end", () => {
