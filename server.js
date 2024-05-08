@@ -13,7 +13,8 @@ server.on("connection", (socket) => {
         clients.map((s) => {
             s.write(data)
         });
-        
+
+
     })
 
     clients.push(socket)
