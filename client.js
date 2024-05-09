@@ -22,6 +22,8 @@ const moveCursor = (dx, dy) => {
   });
 };
 
+let id;
+
 const socket = net.createConnection(
   { host: "127.0.0.1", port: 3008 },
   async () => {
@@ -38,15 +40,20 @@ const socket = net.createConnection(
     ask();
 
     socket.on("data", async (data) => {
-      // log an empty line
-      console.log();
-      // move the cursor one line up
-      await moveCursor(0, -1);
-      // clear that line that cursor just moved into
-      await clearLine(0);
-      console.log(data.toString("utf-8"));
+      if (data.toString().substring(0, 2) === "id") {
+        // When we are getting the id...
+      } else {
+        // When we are getting a message...
+        // log an empty line
+        console.log();
+        // move the cursor one line up
+        await moveCursor(0, -1);
+        // clear that line that cursor just moved into
+        await clearLine(0);
+        console.log(data.toString("utf-8"));
 
-      ask();
+        ask();
+      }
     });
   }
 );
