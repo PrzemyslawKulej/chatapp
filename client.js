@@ -36,12 +36,20 @@ const socket = net.createConnection(
       socket.write(message);
     };
     ask();
+
+    socket.on("data", async (data) => {
+      // log an empty line
+      console.log();
+      // move the cursor one line up
+      await moveCursor(0, -1);
+      // clear that line that cursor just moved into
+      await clearLine(0);
+      console.log(data.toString("utf-8"));
+
+      ask();
+    });
   }
 );
-
-socket.on("data", (data) => {
-  console.log(data.toString("utf-8"));
-});
 
 socket.on("end", () => {
   console.log("Closed!");
