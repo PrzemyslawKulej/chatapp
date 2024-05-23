@@ -35,7 +35,7 @@ const socket = net.createConnection(
       await moveCursor(0, -1);
       // clear the current line that the cursor is in
       await clearLine(0);
-      socket.write(`${id}--:${message}`);
+      socket.write(`${id}  :${message}`);
     };
     ask();
 
