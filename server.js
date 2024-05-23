@@ -12,8 +12,8 @@ server.on("connection", (socket) => {
   socket.write(`id-${clientId}`);
 
   socket.on("data", (data) => {
-    clients.map((s) => {
-      s.write(data);
+    clients.map((client) => {
+      client.socket.write(data);
     });
   });
 

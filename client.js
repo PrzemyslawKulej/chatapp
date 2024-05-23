@@ -35,21 +35,28 @@ const socket = net.createConnection(
       await moveCursor(0, -1);
       // clear the current line that the cursor is in
       await clearLine(0);
-      socket.write(message);
+      socket.write(`${id}--:${message}`);
     };
     ask();
 
     socket.on("data", async (data) => {
+      // log an empty line
+      console.log();
+      // move the cursor one line up
+      await moveCursor(0, -1);
+      // clear that line that cursor just moved into
+      await clearLine(0);
+
       if (data.toString().substring(0, 2) === "id") {
         // When we are getting the id...
+
+        // everything from the third character up until the end
+        id = data.toString("utf-8").substring(3);
+
+        console.log(`Your id is ${id}!\n`);
       } else {
         // When we are getting a message...
-        // log an empty line
-        console.log();
-        // move the cursor one line up
-        await moveCursor(0, -1);
-        // clear that line that cursor just moved into
-        await clearLine(0);
+
         console.log(data.toString("utf-8"));
 
         ask();
